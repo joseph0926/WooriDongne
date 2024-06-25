@@ -5,3 +5,6 @@ out
 dist
 build
 .env
+.strapi-updater.json
+.tmp
+.strapi
