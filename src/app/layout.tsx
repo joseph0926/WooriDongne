@@ -1,9 +1,9 @@
 import { ThemeProvider } from '@/providers/theme.provider';
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Sora } from 'next/font/google';
 import './globals.css';
 
-const inter = Inter({ subsets: ['latin'] });
+const sora = Sora({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'joseph0926`s blog',
@@ -20,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko" suppressHydrationWarning>
-      <body className={inter.className}>
+      <body className={sora.className}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
