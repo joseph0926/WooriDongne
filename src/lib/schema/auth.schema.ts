@@ -38,3 +38,4 @@ export const signUpSchema = z.object({
     .regex(/[a-zA-Z]/, { message: '비밀번호는 영어와 숫자의 조합이어야 합니다.' })
     .regex(/\d/, { message: '비밀번호는 영어와 숫자의 조합이어야 합니다.' }),
 });
+export type SignUpType = z.infer<typeof signUpSchema>;

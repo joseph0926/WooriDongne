@@ -3,11 +3,8 @@
 import { db } from '@/lib/db';
 import { hashPassword } from '@/lib/passwordUtil';
 import { signInSchema, signUpSchema } from '@/lib/schema/auth.schema';
+import { SignUpResponseType } from '@/types/auth.type';
 import { ServerActionProps, ServerActionResponseType } from '@/types/common.type';
-
-type SignUpResponseType = {
-  userId: string;
-};
 
 /**
  * 로그인 서버 액션 함수
