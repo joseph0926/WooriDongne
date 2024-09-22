@@ -7,7 +7,7 @@ import { PropsWithChildren } from 'react';
 export default function AuthLayout({ children }: PropsWithChildren) {
   return (
     <div className="flex h-screen w-full items-center justify-center overflow-hidden">
-      <Card>{children}</Card>
+      <Card className="w-[35%]">{children}</Card>
     </div>
   );
 }
