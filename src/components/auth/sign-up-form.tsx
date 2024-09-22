@@ -13,11 +13,14 @@ import { SiNaver } from 'react-icons/si';
 import { signup } from '@/actions/auth.action';
 import { Loader2 } from 'lucide-react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 /**
  * SignUpForm 컴포넌트입니다
  */
 export function SignUpForm() {
+  const router = useRouter();
+
   const form = useForm<SignUpType>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
@@ -31,6 +34,7 @@ export function SignUpForm() {
     const res = await signup(values);
     if (res && res.success) {
       form.reset();
+      router.push('/sign-in');
     }
   };
 

@@ -3,6 +3,7 @@
 import { db } from '@/lib/db';
 import { comparePassword, excludePassword, hashPassword } from '@/lib/passwordUtil';
 import { signInSchema, signUpSchema } from '@/lib/schema/auth.schema';
+import { createToken } from '@/lib/tokenUtil';
 import {
   SignInPayloadType,
   SignInResponseType,
@@ -46,6 +47,8 @@ export const signin = async (
         data: null,
       };
     }
+
+    createToken(user.id);
 
     return {
       success: true,
