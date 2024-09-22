@@ -16,6 +16,7 @@ export const comparePassword = async (password: string, hashedPassword: string) 
 };
 
 export const excludePassword = (user: User): Omit<User, 'password'> => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { password, ...userWithoutPassword } = user;
   return userWithoutPassword;
 };
