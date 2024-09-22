@@ -56,7 +56,7 @@ next v14
 1. **레포지토리 클론**
 
    ```bash
-   git clone https://github.com/yourusername/wooridongne.git
+   git clone https://github.com/joseph0926/WooriDongne.git
    ```
 
 2. **의존성 설치**
