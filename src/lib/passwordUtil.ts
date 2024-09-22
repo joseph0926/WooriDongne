@@ -1,3 +1,4 @@
+import { User } from '@prisma/client';
 import { compare, hash } from 'bcryptjs';
 
 export const hashPassword = async (password: string) => {
@@ -12,4 +13,9 @@ export const comparePassword = async (password: string, hashedPassword: string) 
   return {
     isMatch,
   };
+};
+
+export const excludePassword = (user: User): Omit<User, 'password'> => {
+  const { password, ...userWithoutPassword } = user;
+  return userWithoutPassword;
 };

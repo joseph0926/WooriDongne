@@ -1,4 +1,5 @@
 import { Card } from '@/components/ui/card';
+import Image from 'next/image';
 import { PropsWithChildren } from 'react';
 
 /**
@@ -7,7 +8,12 @@ import { PropsWithChildren } from 'react';
 export default function AuthLayout({ children }: PropsWithChildren) {
   return (
     <div className="flex h-screen w-full items-center justify-center overflow-hidden">
-      <Card className="w-[35%]">{children}</Card>
+      <Card className="w-[35%] min-w-[520px]">
+        <div className="relative flex w-full flex-col items-center gap-10">
+          <Image src="/logo.png" alt="logo" width={200} height={40} className="h-auto w-auto" />
+          {children}
+        </div>
+      </Card>
     </div>
   );
 }

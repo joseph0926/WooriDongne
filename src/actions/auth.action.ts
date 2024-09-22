@@ -1,28 +1,79 @@
 'use server';
 
 import { db } from '@/lib/db';
-import { hashPassword } from '@/lib/passwordUtil';
+import { comparePassword, excludePassword, hashPassword } from '@/lib/passwordUtil';
 import { signInSchema, signUpSchema } from '@/lib/schema/auth.schema';
-import { SignUpResponseType } from '@/types/auth.type';
-import { ServerActionProps, ServerActionResponseType } from '@/types/common.type';
+import {
+  SignInPayloadType,
+  SignInResponseType,
+  SignUpPayloadType,
+  SignUpResponseType,
+} from '@/types/auth.type';
+import { ServerActionResponseType } from '@/types/common.type';
 
 /**
  * 로그인 서버 액션 함수
  */
-export const signin = async (props: ServerActionProps) => {};
+export const signin = async (
+  payload: SignInPayloadType
+): Promise<ServerActionResponseType<SignInResponseType>> => {
+  const { email, password } = payload;
+
+  const data = signInSchema.parse({
+    email,
+    password,
+  });
+
+  try {
+    const user = await db.user.findFirst({
+      where: {
+        email: data.email,
+      },
+    });
+    if (!user) {
+      return {
+        success: false,
+        message: '이메일 또는 비밀번호가 올바르지 않습니다.',
+        data: null,
+      };
+    }
+
+    const { isMatch } = await comparePassword(data.password, user.password);
+    if (!isMatch) {
+      return {
+        success: false,
+        message: '이메일 또는 비밀번호가 올바르지 않습니다.',
+        data: null,
+      };
+    }
+
+    return {
+      success: true,
+      message: '로그인에 성공하였습니다.',
+      data: { user: excludePassword(user) },
+    };
+  } catch (error) {
+    console.error(error);
+    return {
+      success: false,
+      message: '로그인 중 오류가 발생하였습니다.',
+      data: null,
+    };
+  }
+};
 
 /**
  * 회원가입 서버 액션 함수
  */
 export const signup = async (
-  props: ServerActionProps
+  payload: SignUpPayloadType
 ): Promise<ServerActionResponseType<SignUpResponseType>> => {
-  const { formData } = props;
+  const { username, email, password } = payload;
 
   const data = signUpSchema.parse({
-    username: formData.get('username'),
-    email: formData.get('email'),
-    password: formData.get('password'),
+    username,
+    email,
+    password,
   });
 
   try {

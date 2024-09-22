@@ -8,7 +8,7 @@ export const signInSchema = z.object({
   password: z
     .string()
     .min(1, { message: '비밀번호를 입력해주세요.' })
-    .max(12, { message: '비밀번호는 최대 12자입니다.' })
+    .max(20, { message: '비밀번호는 최대 20자입니다.' })
     .regex(/[A-Z]/, { message: '비밀번호에는 최소 1개의 대문자가 포함되어야 합니다.' })
     .regex(/[!@#$%^&*(),.?":{}|<>]/, {
       message: '비밀번호에는 최소 1개의 특수문자가 포함되어야 합니다.',
@@ -30,7 +30,7 @@ export const signUpSchema = z.object({
   password: z
     .string()
     .min(1, { message: '비밀번호를 입력해주세요.' })
-    .max(12, { message: '비밀번호는 최대 12자입니다.' })
+    .max(20, { message: '비밀번호는 최대 20자입니다.' })
     .regex(/[A-Z]/, { message: '비밀번호에는 최소 1개의 대문자가 포함되어야 합니다.' })
     .regex(/[!@#$%^&*(),.?":{}|<>]/, {
       message: '비밀번호에는 최소 1개의 특수문자가 포함되어야 합니다.',

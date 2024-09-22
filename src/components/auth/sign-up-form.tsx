@@ -1,7 +1,7 @@
 'use client';
 
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
-import { signInSchema, SignInType } from '@/lib/schema/auth.schema';
+import { signUpSchema, SignUpType } from '@/lib/schema/auth.schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { Input } from '@/components/ui/input';
@@ -10,36 +10,51 @@ import { Separator } from '@/components/ui/separator';
 import { FaGoogle } from 'react-icons/fa';
 import { RiKakaoTalkFill } from 'react-icons/ri';
 import { SiNaver } from 'react-icons/si';
+import { signup } from '@/actions/auth.action';
 import { Loader2 } from 'lucide-react';
 import Link from 'next/link';
-import { signin } from '@/actions/auth.action';
-import { useRouter } from 'next/navigation';
 
 /**
- * SignInForm 컴포넌트입니다
+ * SignUpForm 컴포넌트입니다
  */
-export function SignInForm() {
-  const router = useRouter();
-
-  const form = useForm<SignInType>({
-    resolver: zodResolver(signInSchema),
+export function SignUpForm() {
+  const form = useForm<SignUpType>({
+    resolver: zodResolver(signUpSchema),
     defaultValues: {
+      username: '',
       email: '',
       password: '',
     },
   });
 
-  const submitHandler = async (values: SignInType) => {
-    const res = await signin(values);
+  const submitHandler = async (values: SignUpType) => {
+    const res = await signup(values);
     if (res && res.success) {
       form.reset();
-      router.push('/');
     }
   };
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(submitHandler)} className="flex w-full flex-col gap-6">
+        <FormField
+          control={form.control}
+          name="username"
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+                <Input
+                  disabled={form.formState.isSubmitting}
+                  {...field}
+                  placeholder="닉네임을 입력해주세요."
+                  className="h-12 text-xl"
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
         <FormField
           control={form.control}
           name="email"
@@ -65,9 +80,8 @@ export function SignInForm() {
             <FormItem>
               <FormControl>
                 <Input
-                  disabled={form.formState.isSubmitting}
-                  {...field}
                   type="password"
+                  {...field}
                   placeholder="비밀번호를 입력해주세요."
                   className="h-12 text-xl"
                 />
@@ -78,13 +92,13 @@ export function SignInForm() {
         />
 
         <Button disabled={form.formState.isSubmitting} className="h-12 w-full text-lg font-bold">
-          {form.formState.isSubmitting ? <Loader2 className="size-4 animate-spin" /> : '로그인'}
+          {form.formState.isSubmitting ? <Loader2 className="size-4 animate-spin" /> : '회원가입'}
         </Button>
       </form>
       <div className="flex items-center gap-2">
-        <p>아직 회원이 아니신가요?</p>
-        <Link href="/sign-up" className="cursor-pointer font-semibold text-primary">
-          회원가입
+        <p>이미 회원이신가요?</p>
+        <Link href="/sign-in" className="cursor-pointer font-semibold text-primary">
+          로그인
         </Link>
       </div>
       <Separator className="h-0.5" />
