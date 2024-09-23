@@ -6,18 +6,18 @@ import { signInSchema, signUpSchema } from '@/lib/schema/auth.schema';
 import { createToken } from '@/lib/tokenUtil';
 import {
   SignInPayloadType,
-  SignInResponseType,
+  UserResponseType,
   SignUpPayloadType,
   SignUpResponseType,
 } from '@/types/auth.type';
-import { ServerActionResponseType } from '@/types/common.type';
+import { CustomResponseType } from '@/types/common.type';
 
 /**
  * 로그인 서버 액션 함수
  */
 export const signin = async (
   payload: SignInPayloadType
-): Promise<ServerActionResponseType<SignInResponseType>> => {
+): Promise<CustomResponseType<UserResponseType>> => {
   const { email, password } = payload;
 
   const data = signInSchema.parse({
@@ -70,7 +70,7 @@ export const signin = async (
  */
 export const signup = async (
   payload: SignUpPayloadType
-): Promise<ServerActionResponseType<SignUpResponseType>> => {
+): Promise<CustomResponseType<SignUpResponseType>> => {
   const { username, email, password } = payload;
 
   const data = signUpSchema.parse({

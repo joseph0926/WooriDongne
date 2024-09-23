@@ -12,7 +12,7 @@ export type SignUpPayloadType = {
 };
 
 /** 로그인 응답 데이터입니다 */
-export type SignInResponseType = {
+export type UserResponseType = {
   user: Omit<User, 'password'>;
 };
 /** 로그인 페이로드입니다. */
