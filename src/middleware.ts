@@ -1,20 +1,23 @@
 import { NextResponse } from 'next/server';
 import { NextRequest } from 'next/server';
 
-// TODO: 추후 dashboard 아닌 실제 라우터로 겨체
 const protectedRoutes = ['/init'];
 
 export function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl;
+  const { pathname, search } = request.nextUrl;
 
   if (protectedRoutes.some((route) => pathname.startsWith(route))) {
     if (!request.cookies.has('token')) {
-      return NextResponse.redirect(new URL('/sign-in', request.url));
+      const redirectUrl = new URL('/sign-in', request.url);
+      const originalPath = pathname + search;
+
+      redirectUrl.searchParams.set('redirect', originalPath);
+
+      return NextResponse.redirect(redirectUrl);
     }
   }
 }
 
 export const config = {
-  // TODO: 추후 dashboard 아닌 실제 라우터로 겨체
   matcher: ['/init/:path*', '/'],
 };
