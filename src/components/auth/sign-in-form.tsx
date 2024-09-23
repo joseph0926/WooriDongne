@@ -13,13 +13,15 @@ import { SiNaver } from 'react-icons/si';
 import { Loader2 } from 'lucide-react';
 import Link from 'next/link';
 import { signin } from '@/actions/auth.action';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 /**
  * SignInForm 컴포넌트입니다
  */
 export function SignInForm() {
   const router = useRouter();
+  const params = useSearchParams();
+  const redirectUrl = params.get('redirect');
 
   const form = useForm<SignInType>({
     resolver: zodResolver(signInSchema),
@@ -33,7 +35,7 @@ export function SignInForm() {
     const res = await signin(values);
     if (res && res.success) {
       form.reset();
-      router.push('/');
+      router.push(redirectUrl ? decodeURIComponent(redirectUrl) : '/');
     }
   };
 
