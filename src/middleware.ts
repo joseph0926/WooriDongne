@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { NextRequest } from 'next/server';
 
 // TODO: 추후 dashboard 아닌 실제 라우터로 겨체
-const protectedRoutes = ['/dashboard'];
+const protectedRoutes = ['/init'];
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -16,5 +16,5 @@ export function middleware(request: NextRequest) {
 
 export const config = {
   // TODO: 추후 dashboard 아닌 실제 라우터로 겨체
-  matcher: ['/dashboard/:path*', '/'],
+  matcher: ['/init/:path*', '/'],
 };

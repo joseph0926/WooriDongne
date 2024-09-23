@@ -16,3 +16,15 @@ export const createToken = (userId: string) => {
     path: '/',
   });
 };
+
+export const getUserId = () => {
+  const tokenCookie = cookies().get('token');
+
+  if (!tokenCookie) {
+    throw new Error('유효하지 않은 자격증명입니다.');
+  }
+
+  const { userId } = jwt.verify(tokenCookie.value, JWT_SECRET) as { userId: string };
+
+  return userId;
+};
