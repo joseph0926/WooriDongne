@@ -80,7 +80,6 @@ export function StepThree() {
   const tagRemoveHandler = (tag: string) => {
     setTags((prevState) => prevState.filter((t: string) => t !== tag));
   };
-  console.log(tags);
 
   return (
     <div className="flex flex-col gap-4">
