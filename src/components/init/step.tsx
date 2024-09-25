@@ -4,9 +4,12 @@ import { useState } from 'react';
 import { InitStep } from './init-step';
 import { Button } from '../ui/button';
 import { StepFour, StepOne, StepThree, StepTwo } from './step-x';
+import { useInitStep } from '@/hooks/use-init-step';
 
 /** Init 컴포넌트 */
 export function Init() {
+  const { error } = useInitStep();
+
   const [step, setStep] = useState<number>(1);
 
   return (
@@ -37,15 +40,16 @@ export function Init() {
             onClick={() => setStep((prevState) => (prevState < 2 ? prevState : prevState - 1))}
             className="rounded px-2 py-1 text-slate-400 hover:text-slate-700"
           >
-            Back
+            뒤로가기
           </Button>
           <Button
+            disabled={step === 4 && error}
             onClick={() => setStep((prevState) => (prevState > 4 ? prevState : prevState + 1))}
             className={`${
               step > 4 ? 'pointer-events-none opacity-50' : ''
             } bg flex items-center justify-center rounded-full bg-blue-500 px-3.5 py-1.5 font-medium tracking-tight text-white hover:bg-blue-600 active:bg-blue-700`}
           >
-            Continue
+            {step === 4 ? '제출하기' : '다음으로'}
           </Button>
         </div>
       </div>
