@@ -1,3 +1,5 @@
+'use server';
+
 import { db } from '@/lib/db';
 import { profileSchema } from '@/lib/schema/profile.schema';
 import { getUserId } from '@/lib/tokenUtil';
