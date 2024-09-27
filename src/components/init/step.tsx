@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { InitStep } from './init-step';
 import { Button } from '../ui/button';
-import { StepFour, StepOne, StepThree, StepTwo } from './step-x';
 import { FormProvider, useForm } from 'react-hook-form';
 import {
   profileSchema,
@@ -14,6 +13,10 @@ import {
 } from '@/lib/schema/profile.schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { createProfile } from '@/actions/profile.action';
+import { StepOne } from './step-one';
+import { StepTwo } from './step-two';
+import { StepThree } from './step-three';
+import { StepFour } from './step-four';
 
 /** Init 컴포넌트 */
 export function Init() {
