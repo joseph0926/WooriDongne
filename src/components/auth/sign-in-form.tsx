@@ -14,6 +14,7 @@ import { Loader2 } from 'lucide-react';
 import Link from 'next/link';
 import { signin } from '@/actions/auth.action';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { toast } from 'sonner';
 
 /**
  * SignInForm 컴포넌트입니다
@@ -33,6 +34,10 @@ export function SignInForm() {
 
   const submitHandler = async (values: SignInType) => {
     const res = await signin(values);
+    if (res && !res.success) {
+      toast.error(res.message);
+      return;
+    }
     if (res && res.success) {
       form.reset();
       router.push(redirectUrl ? decodeURIComponent(redirectUrl) : '/');

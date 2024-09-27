@@ -14,6 +14,7 @@ import { signup } from '@/actions/auth.action';
 import { Loader2 } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 
 /**
  * SignUpForm 컴포넌트입니다
@@ -32,6 +33,10 @@ export function SignUpForm() {
 
   const submitHandler = async (values: SignUpType) => {
     const res = await signup(values);
+    if (res && !res.success) {
+      toast.error(res.message);
+      return;
+    }
     if (res && res.success) {
       form.reset();
       router.push('/sign-in');
