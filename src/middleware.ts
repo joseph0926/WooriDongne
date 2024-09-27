@@ -6,6 +6,14 @@ const protectedRoutes = ['/init'];
 export function middleware(request: NextRequest) {
   const { pathname, search } = request.nextUrl;
 
+  if (pathname.startsWith('/sign')) {
+    if (request.cookies.has('token')) {
+      const redirectUrl = new URL('/', request.url);
+
+      return NextResponse.redirect(redirectUrl);
+    }
+  }
+
   if (protectedRoutes.some((route) => pathname.startsWith(route))) {
     if (!request.cookies.has('token')) {
       const redirectUrl = new URL('/sign-in', request.url);
@@ -19,5 +27,8 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/init/:path*', '/'],
+  matcher: [
+    '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
+    '/(api|trpc)(.*)',
+  ],
 };
