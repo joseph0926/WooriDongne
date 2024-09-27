@@ -25,9 +25,23 @@ model Profile {
   updatedAt DateTime @updatedAt
 
   name String
-  address String
   tags String[]
 
-  userId String @unique
-  user User @relation(fields: [userId], references: [id])
+  userId          String        @unique
+  user            User          @relation(fields: [userId], references: [id])
+  regionalGroupId String
+  regionalGroup   RegionalGroup @relation(fields: [regionalGroupId], references: [id])
+}
+
+model RegionalGroup {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name         String
+  city         String
+  district     String
+  neighborhood String
+
+  profiles Profile[]
 }
