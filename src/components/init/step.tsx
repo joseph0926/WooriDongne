@@ -17,9 +17,14 @@ import { StepOne } from './step-one';
 import { StepTwo } from './step-two';
 import { StepThree } from './step-three';
 import { StepFour } from './step-four';
+import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
+import { Loader2 } from 'lucide-react';
 
 /** Init 컴포넌트 */
 export function Init() {
+  const router = useRouter();
+
   const [formData, setFormData] = useState<Partial<ProfileType>>({});
   const [step, setStep] = useState<number>(1);
 
@@ -43,19 +48,29 @@ export function Init() {
   });
   const {
     handleSubmit,
-    formState: { isValid },
+    formState: { isValid, isSubmitting },
   } = methods;
 
-  const onSubmit = (data: Partial<ProfileType>) => {
+  const onSubmit = async (data: Partial<ProfileType>) => {
     setFormData((prev) => ({ ...prev, ...data }));
     if (step < 4) {
       setStep(step + 1);
     } else {
-      createProfile({
+      const data = await createProfile({
         name: formData.name!,
         address: formData.address!,
         tags: formData.tags!,
       });
+
+      if (data && !data.success) {
+        toast.error(data.message);
+        return;
+      }
+      if (data && data.success) {
+        router.push(
+          `/region/${data.data?.regionalGroup.city}/${data.data?.regionalGroup.district}/${data.data?.regionalGroup.neighborhood}`
+        );
+      }
     }
   };
 
@@ -97,7 +112,15 @@ export function Init() {
               step > 4 ? 'pointer-events-none opacity-50' : ''
             } bg flex items-center justify-center rounded-full bg-blue-500 px-3.5 py-1.5 font-medium tracking-tight text-white hover:bg-blue-600 active:bg-blue-700`}
           >
-            {step === 4 ? '제출하기' : '다음으로'}
+            {step === 4 ? (
+              isSubmitting ? (
+                <Loader2 className="size-4 animate-spin" />
+              ) : (
+                '제출하기'
+              )
+            ) : (
+              '다음으로'
+            )}
           </Button>
         </div>
       </div>

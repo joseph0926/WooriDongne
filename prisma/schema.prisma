@@ -28,9 +28,9 @@ model Profile {
   tags String[]
 
   userId          String        @unique
-  user            User          @relation(fields: [userId], references: [id])
+  user            User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   regionalGroupId String
-  regionalGroup   RegionalGroup @relation(fields: [regionalGroupId], references: [id])
+  regionalGroup   RegionalGroup @relation(fields: [regionalGroupId], references: [id], onDelete: Cascade)
 }
 
 model RegionalGroup {
@@ -44,4 +44,6 @@ model RegionalGroup {
   neighborhood String
 
   profiles Profile[]
+
+  @@unique([city, district, neighborhood])
 }
