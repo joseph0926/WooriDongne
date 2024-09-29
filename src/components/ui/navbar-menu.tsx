@@ -1,10 +1,11 @@
 'use client';
 
-import React, { PropsWithChildren } from 'react';
+import React, { ComponentProps, PropsWithChildren } from 'react';
 import { motion } from 'framer-motion';
 import Link, { LinkProps } from 'next/link';
 import Image from 'next/image';
 import { navbarMenuTransition } from '@/constants/navbar';
+import { cn } from '@/lib/utils';
 
 export const MenuItem = ({
   setActive,
@@ -21,7 +22,7 @@ export const MenuItem = ({
     <div onMouseEnter={() => setActive(item)} className="relative">
       <motion.p
         transition={{ duration: 0.3 }}
-        className="cursor-pointer text-black hover:opacity-[0.9] dark:text-white"
+        className="cursor-pointer font-medium transition-all hover:font-bold"
       >
         {item}
       </motion.p>
@@ -60,7 +61,9 @@ export const Menu = ({
   return (
     <nav
       onMouseLeave={() => setActive(null)}
-      className="relative flex justify-center space-x-4 rounded-full border border-transparent bg-white px-8 py-6 shadow-input dark:border-white/[0.2] dark:bg-black"
+      className={cn(
+        'relative flex justify-center space-x-12 rounded-full border border-transparent px-8 py-6'
+      )}
     >
       {children}
     </nav>
@@ -97,7 +100,10 @@ export const ProductItem = ({
   );
 };
 
-export const HoveredLink = ({ children, ...rest }: PropsWithChildren<LinkProps>) => {
+export const HoveredLink = ({
+  children,
+  ...rest
+}: ComponentProps<'a'> & PropsWithChildren<LinkProps>) => {
   return (
     <Link {...rest} className="text-neutral-700 hover:text-black dark:text-neutral-200">
       {children}

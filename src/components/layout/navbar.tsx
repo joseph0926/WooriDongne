@@ -3,19 +3,41 @@
 import { cn } from '@/lib/utils';
 import { useState } from 'react';
 import { MenuItem, HoveredLink, ProductItem, Menu } from '@/components/ui/navbar-menu';
+import Image from 'next/image';
+import Link from 'next/link';
+import { User2 } from 'lucide-react';
+import { UserResponseType } from '@/types/auth.type';
 
-export function Navbar({ className }: { className?: string }) {
+type NavbarProps = {
+  userData: UserResponseType | null;
+  className?: string;
+};
+
+export function Navbar({ className, userData }: NavbarProps) {
   const [active, setActive] = useState<string | null>(null);
 
   return (
-    <div className={cn('fixed inset-x-0 top-10 z-50 mx-auto max-w-2xl', className)}>
+    <div
+      className={cn(
+        'sticky inset-x-0 top-0 z-50 flex h-24 items-center justify-between px-10',
+        className
+      )}
+    >
+      <Link href="/">
+        <Image
+          src="/logo-no-text.png"
+          alt="logo"
+          width={50}
+          height={50}
+          className="h-auto w-auto"
+        />
+      </Link>
       <Menu setActive={setActive}>
         <MenuItem setActive={setActive} active={active} item="Services">
           <div className="flex flex-col space-y-4 text-sm">
-            <HoveredLink href="/web-dev">Web Development</HoveredLink>
-            <HoveredLink href="/interface-design">Interface Design</HoveredLink>
-            <HoveredLink href="/seo">Search Engine Optimization</HoveredLink>
-            <HoveredLink href="/branding">Branding</HoveredLink>
+            <HoveredLink href="#intro">동네생활이란?</HoveredLink>
+            <HoveredLink href="#function">이런 기능이 있어요</HoveredLink>
+            <HoveredLink href="#how">이렇게 개발되었어요</HoveredLink>
           </div>
         </MenuItem>
         <MenuItem setActive={setActive} active={active} item="Products">
@@ -46,15 +68,24 @@ export function Navbar({ className }: { className?: string }) {
             />
           </div>
         </MenuItem>
-        <MenuItem setActive={setActive} active={active} item="Pricing">
+        <MenuItem setActive={setActive} active={active} item="About">
           <div className="flex flex-col space-y-4 text-sm">
-            <HoveredLink href="/hobby">Hobby</HoveredLink>
-            <HoveredLink href="/individual">Individual</HoveredLink>
-            <HoveredLink href="/team">Team</HoveredLink>
-            <HoveredLink href="/enterprise">Enterprise</HoveredLink>
+            <HoveredLink href="/contact">문의하기</HoveredLink>
+            <HoveredLink target="_blank" href="https://github.com/joseph0926/WooriDongne">
+              기여하기
+            </HoveredLink>
           </div>
         </MenuItem>
       </Menu>
+      <div className="flex items-center gap-8">
+        {userData ? (
+          <div>{userData.user.username}</div>
+        ) : (
+          <Link href="/sign-in">
+            <User2 className="size-8" />
+          </Link>
+        )}
+      </div>
     </div>
   );
 }
