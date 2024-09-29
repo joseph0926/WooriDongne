@@ -6,7 +6,7 @@ import {
   checkIconVariants,
   rippleTransition,
   rippleVariants,
-} from './init-step-animation';
+} from '@/constants/init';
 
 type InitStepProps = {
   /** 해당 컴포넌트의 step */
