@@ -1,7 +1,7 @@
 'use server';
 
 import { db } from '@/lib/db';
-import { createRegionName, parseAddress } from '@/lib/regionUtil';
+import { createRegionName, generateRegionId, parseAddress } from '@/lib/regionUtil';
 import { profileSchema } from '@/lib/schema/profile.schema';
 import { getUserId } from '@/lib/tokenUtil';
 import { CustomResponseType } from '@/types/common.type';
@@ -45,18 +45,18 @@ export const createProfile = async (
 
     const { city, district, neighborhood } = parseAddress(data.address);
     const regionName = createRegionName(city, district, neighborhood);
+    const regionalGroupId = generateRegionId(city, district, neighborhood);
 
-    let regionalGroup = await db.regionalGroup.findFirst({
+    let regionalGroup = await db.regionalGroup.findUnique({
       where: {
-        city,
-        district,
-        neighborhood,
+        id: regionalGroupId,
       },
     });
 
     if (!regionalGroup) {
       regionalGroup = await db.regionalGroup.create({
         data: {
+          id: regionalGroupId,
           name: regionName,
           city,
           district,

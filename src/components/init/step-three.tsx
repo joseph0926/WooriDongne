@@ -12,7 +12,8 @@ export function StepThree() {
     clearErrors,
     formState: { errors },
   } = useFormContext<ProfileStepType>();
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState<string>('');
+  const [isComposing, setIsComposing] = useState<boolean>(false);
 
   return (
     <div className="flex h-40 flex-col gap-4">
@@ -26,6 +27,9 @@ export function StepThree() {
           const { value, onChange } = field;
 
           const inputKeyDownHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
+            /** 한글(조합 글자)의 경우 조합중이면 추가하지 않도록 하는 로직 */
+            if (isComposing) return;
+
             if (e.key === 'Enter' || e.key === ',') {
               e.preventDefault();
               const tagValue = inputValue.trim();
@@ -55,7 +59,6 @@ export function StepThree() {
                 clearErrors('tags');
                 onChange([...value, tagValue]);
                 setInputValue('');
-                console.log(inputValue);
               }
             }
           };
@@ -76,6 +79,8 @@ export function StepThree() {
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyDown={inputKeyDownHandler}
+                onCompositionStart={() => setIsComposing(true)}
+                onCompositionEnd={() => setIsComposing(false)}
               />
               {value.length > 0 && (
                 <div className="flex w-full flex-wrap items-center gap-2">
