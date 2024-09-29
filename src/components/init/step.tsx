@@ -67,9 +67,7 @@ export function Init() {
         return;
       }
       if (data && data.success) {
-        router.push(
-          `/region/${data.data?.regionalGroup.city}/${data.data?.regionalGroup.district}/${data.data?.regionalGroup.neighborhood}`
-        );
+        router.push(`/region/${data.data?.regionalGroup.id}`);
       }
     }
   };
