@@ -7,32 +7,32 @@ import Image from 'next/image';
 import { navbarMenuTransition } from '@/constants/navbar';
 import { cn } from '@/lib/utils';
 
-export const MenuItem = ({
-  setActive,
-  active,
-  item,
-  children,
-}: {
-  setActive: (item: string) => void;
-  active: string | null;
-  item: string;
-  children?: React.ReactNode;
-}) => {
-  return (
-    <div onMouseEnter={() => setActive(item)} className="relative">
-      <motion.p
-        transition={{ duration: 0.3 }}
-        className="cursor-pointer font-medium transition-all hover:font-bold"
-      >
-        {item}
-      </motion.p>
-      {active !== null && (
-        <motion.div
-          initial={{ opacity: 0, scale: 0.85, y: 10 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          transition={navbarMenuTransition}
+export const MenuItem = React.memo(
+  ({
+    setActive,
+    active,
+    item,
+    children,
+  }: {
+    setActive: (item: string) => void;
+    active: string | null;
+    item: string;
+    children?: React.ReactNode;
+  }) => {
+    return (
+      <div onMouseEnter={() => setActive(item)} className="relative">
+        <motion.p
+          transition={{ duration: 0.3 }}
+          className="cursor-pointer font-medium transition-all hover:font-bold"
         >
-          {active === item && (
+          {item}
+        </motion.p>
+        {active === item && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.85, y: 10 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={navbarMenuTransition}
+          >
             <div className="absolute left-1/2 top-[calc(100%_+_1.2rem)] -translate-x-1/2 transform pt-4">
               <motion.div
                 transition={navbarMenuTransition}
@@ -44,12 +44,13 @@ export const MenuItem = ({
                 </motion.div>
               </motion.div>
             </div>
-          )}
-        </motion.div>
-      )}
-    </div>
-  );
-};
+          </motion.div>
+        )}
+      </div>
+    );
+  }
+);
+MenuItem.displayName = 'MenuItem';
 
 export const Menu = ({
   setActive,

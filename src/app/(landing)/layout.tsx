@@ -1,13 +1,10 @@
-import { Navbar } from '@/components/layout/navbar';
-import { getUserInfo } from '@/services/user.service';
+import { NavbarWrapper } from '@/components/layout/navbar-wrapper';
 import { PropsWithChildren } from 'react';
 
-export default async function LandingLayout({ children }: PropsWithChildren) {
-  const { data } = await getUserInfo();
-
+export default function LandingLayout({ children }: PropsWithChildren) {
   return (
     <div className="relative flex h-full w-full flex-col">
-      <Navbar userData={data} />
+      <NavbarWrapper />
       {children}
     </div>
   );
