@@ -15,6 +15,7 @@ import { motion } from 'framer-motion';
 import { SidebarOption } from './sidebar-option';
 import { SidebarTitle } from './sidebar-title';
 import { ProfileResponseType } from '@/types/profile.type';
+import { cn } from '@/lib/utils';
 
 type SidebarProps = {
   profile: ProfileResponseType;
@@ -27,10 +28,10 @@ export function Sidebar({ profile }: SidebarProps) {
   return (
     <motion.nav
       layout
-      className="sticky top-0 h-screen shrink-0 border border-r p-2"
-      style={{
-        width: open ? '260px' : 'fit-content',
-      }}
+      className={cn(
+        'sticky top-0 h-screen shrink-0 border border-r p-2',
+        open ? 'w-fit sm:w-[260px]' : 'w-fit'
+      )}
     >
       <SidebarTitle open={open} profile={profile} />
       <div className="space-y-2.5">
@@ -102,7 +103,7 @@ function ToggleClose({
     <motion.button
       layout
       onClick={() => setOpen((pv) => !pv)}
-      className="absolute bottom-0 left-0 right-0 border-t transition-colors hover:bg-secondary"
+      className="absolute bottom-0 left-0 right-0 hidden border-t transition-colors hover:bg-secondary sm:block"
     >
       <div className="flex items-center p-2">
         <motion.div layout className="grid size-10 place-content-center text-xl">

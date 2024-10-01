@@ -11,7 +11,7 @@ type SidebarTitleProps = {
 export function SidebarTitle({ open, profile }: SidebarTitleProps) {
   return (
     <div className="my-3 border-b pb-3">
-      <div className="flex cursor-pointer items-center justify-between rounded-md transition-colors hover:bg-secondary">
+      <div className="flex cursor-pointer items-center justify-center rounded-md transition-colors hover:bg-secondary sm:justify-between">
         <div className="flex gap-4">
           <Logo />
           {open && (
@@ -20,13 +20,14 @@ export function SidebarTitle({ open, profile }: SidebarTitleProps) {
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.125 }}
+              className="hidden sm:block"
             >
               <span className="block text-base font-semibold">{profile.name}</span>
               <span className="block text-base text-primary">{profile.regionalGroup.name}</span>
             </motion.div>
           )}
         </div>
-        {open && <FiChevronDown className="mr-2" />}
+        {open && <FiChevronDown className="mr-2 hidden sm:block" />}
       </div>
     </div>
   );

@@ -32,7 +32,7 @@ export function SidebarOption({ Icon, title, selected, setSelected, open, notifs
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.125 }}
-          className="font-medium"
+          className="hidden font-medium sm:inline"
         >
           {title}
         </motion.span>
@@ -47,7 +47,7 @@ export function SidebarOption({ Icon, title, selected, setSelected, open, notifs
           }}
           style={{ y: '-50%' }}
           transition={{ delay: 0.5 }}
-          className="absolute right-2 top-1/2 size-5 rounded bg-primary text-center text-sm text-white"
+          className="absolute right-2 top-1/2 hidden size-5 rounded bg-primary text-center text-sm text-white sm:inline"
         >
           {notifs}
         </motion.span>
