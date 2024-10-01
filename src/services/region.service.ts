@@ -21,6 +21,12 @@ export const getProfile = async (): Promise<CustomResponseType<ProfileResponseTy
       },
       include: {
         regionalGroup: true,
+        user: {
+          select: {
+            email: true,
+            username: true,
+          },
+        },
       },
     });
     if (!profile) {

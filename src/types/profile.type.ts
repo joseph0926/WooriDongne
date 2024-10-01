@@ -18,7 +18,10 @@ export type ProfileResponseType = {
   name: string;
   regionalGroup: RegionalGroup;
   tags: string[];
-  userId: string;
+  user: {
+    email: string;
+    username: string;
+  };
 };
 
 export type RegionalInfo = {
