@@ -14,8 +14,13 @@ import {
 import { motion } from 'framer-motion';
 import { SidebarOption } from './sidebar-option';
 import { SidebarTitle } from './sidebar-title';
+import { ProfileResponseType } from '@/types/profile.type';
 
-export function Sidebar() {
+type SidebarProps = {
+  profile: ProfileResponseType;
+};
+
+export function Sidebar({ profile }: SidebarProps) {
   const [open, setOpen] = useState<boolean>(true);
   const [selected, setSelected] = useState<string>('Dashboard');
 
@@ -27,8 +32,7 @@ export function Sidebar() {
         width: open ? '260px' : 'fit-content',
       }}
     >
-      <SidebarTitle open={open} />
-
+      <SidebarTitle open={open} profile={profile} />
       <div className="space-y-2.5">
         <SidebarOption
           Icon={FiHome}

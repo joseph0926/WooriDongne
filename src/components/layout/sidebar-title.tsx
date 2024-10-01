@@ -1,8 +1,14 @@
+import { ProfileResponseType } from '@/types/profile.type';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { FiChevronDown } from 'react-icons/fi';
 
-export function SidebarTitle({ open }: { open: boolean }) {
+type SidebarTitleProps = {
+  profile: ProfileResponseType;
+  open: boolean;
+};
+
+export function SidebarTitle({ open, profile }: SidebarTitleProps) {
   return (
     <div className="my-3 border-b pb-3">
       <div className="flex cursor-pointer items-center justify-between rounded-md transition-colors hover:bg-secondary">
@@ -15,8 +21,8 @@ export function SidebarTitle({ open }: { open: boolean }) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.125 }}
             >
-              {/* <span className="block text-base font-semibold">{data?.user.username}</span> */}
-              <span className="block text-base text-primary">Pro Plan</span>
+              <span className="block text-base font-semibold">{profile.name}</span>
+              <span className="block text-base text-primary">{profile.regionalGroup.name}</span>
             </motion.div>
           )}
         </div>
