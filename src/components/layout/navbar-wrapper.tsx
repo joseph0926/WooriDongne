@@ -3,8 +3,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Navbar } from './navbar';
 import { Loader2, User2 } from 'lucide-react';
-import { getUserInfo } from '@/services/user.service';
 import { Suspense } from 'react';
+import { getProfile } from '@/services/region.service';
+import { redirect } from 'next/navigation';
 
 export function NavbarWrapper({ className }: { className?: string }) {
   return (
@@ -33,17 +34,16 @@ export function NavbarWrapper({ className }: { className?: string }) {
 }
 
 async function NavbarUserSide() {
-  const { data } = await getUserInfo();
+  const { data, success } = await getProfile();
+  if (success && data) {
+    redirect(`/region/${data.regionalGroup.id}`);
+  }
 
   return (
     <div className="flex items-center gap-8">
-      {data ? (
-        <div>{data.user.username}</div>
-      ) : (
-        <Link href="/sign-in">
-          <User2 className="size-8" />
-        </Link>
-      )}
+      <Link href="/sign-in">
+        <User2 className="size-8" />
+      </Link>
     </div>
   );
 }
