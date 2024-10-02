@@ -6,6 +6,7 @@ import { Loader2, User2 } from 'lucide-react';
 import { Suspense } from 'react';
 import { getProfile } from '@/services/region.service';
 import { redirect } from 'next/navigation';
+import { ThemeToggle } from '@/components/ui/theme-toggle';
 
 export function NavbarWrapper({ className }: { className?: string }) {
   return (
@@ -26,9 +27,12 @@ export function NavbarWrapper({ className }: { className?: string }) {
         />
       </Link>
       <Navbar />
-      <Suspense fallback={<Loader2 className="mx-2.5 size-6 animate-spin" />}>
-        <NavbarUserSide />
-      </Suspense>
+      <div className="flex items-center gap-4">
+        <ThemeToggle />
+        <Suspense fallback={<Loader2 className="mx-2.5 size-6 animate-spin" />}>
+          <NavbarUserSide />
+        </Suspense>
+      </div>
     </div>
   );
 }
