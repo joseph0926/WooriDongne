@@ -3,6 +3,7 @@ import localFont from 'next/font/local';
 import './globals.css';
 import { cn } from '@/lib/utils';
 import { Toaster } from 'sonner';
+import { ThemeProvider } from 'next-themes';
 
 const pretendard = localFont({
   src: './fonts/PretendardVariable.woff2',
@@ -27,8 +28,15 @@ export default function RootLayout({
   return (
     <html lang="ko" suppressHydrationWarning>
       <body className={cn(pretendard.className, 'antialiased')}>
-        <Toaster closeButton={true} position="top-right" richColors />
-        {children}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Toaster closeButton={true} position="top-right" richColors />
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );
