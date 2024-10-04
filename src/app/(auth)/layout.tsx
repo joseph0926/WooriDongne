@@ -8,7 +8,7 @@ import { PropsWithChildren } from 'react';
 export default function AuthLayout({ children }: PropsWithChildren) {
   return (
     <div className="flex h-screen w-full items-center justify-center overflow-hidden">
-      <Card className="w-full max-lg:mx-6 lg:w-[35%] lg:min-w-[520px]">
+      <Card className="w-full border max-lg:mx-6 lg:w-[35%] lg:min-w-[520px]">
         <div className="relative flex w-full flex-col items-center gap-10">
           <Image
             src="/logo.png"
