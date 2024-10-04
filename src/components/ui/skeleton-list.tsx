@@ -12,7 +12,7 @@ const SkeletonList = ({ length = 5, className }: SkeletonListProps) => {
     return Array.from({ length }, (_, index) => ({
       id: `${id}-${index}`,
     }));
-  }, [id]);
+  }, [id, length]);
 
   return (
     <>
