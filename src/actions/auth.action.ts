@@ -11,6 +11,8 @@ import {
   SignUpResponseType,
 } from '@/types/auth.type';
 import { CustomResponseType } from '@/types/common.type';
+import { revalidatePath } from 'next/cache';
+import { cookies } from 'next/headers';
 
 /**
  * 로그인 서버 액션 함수
@@ -115,6 +117,31 @@ export const signup = async (
     return {
       success: false,
       message: '회원가입 중 오류가 발생하였습니다.',
+      data: null,
+    };
+  }
+};
+
+/**
+ * 로그아웃 서버 액션 함수
+ */
+export const logout = async (): Promise<CustomResponseType<null>> => {
+  try {
+    const cookieStore = cookies();
+    cookieStore.delete('token');
+
+    revalidatePath('/', 'layout');
+
+    return {
+      success: true,
+      message: '로그아웃에 성공하였습니다.',
+      data: null,
+    };
+  } catch (error) {
+    console.error(error);
+    return {
+      success: false,
+      message: '로그아웃 중 오류가 발생하였습니다.',
       data: null,
     };
   }
