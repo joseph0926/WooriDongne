@@ -76,7 +76,12 @@ export const createProfile = async (
         name: true,
         tags: true,
         regionalGroup: true,
-        userId: true,
+        user: {
+          select: {
+            username: true,
+            email: true,
+          },
+        },
       },
     });
 
